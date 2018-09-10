@@ -1,0 +1,31 @@
+ .new-tweet {
+    border-radius: 10px;
+    padding: 20px; 
+    background-color: #f2f2f2;
+    border: 1px solid #d7dde5; 
+    height: 150px;
+
+
+}
+
+.tweet-heading   {
+  border-bottom: 1px solid black;
+  margin-top: 0;
+  text-align: left;
+  width: 350px 
+
+} 
+
+.tweet-content  {
+    width: 350px;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.tweet-button {
+    float:left;
+}
+
+.char-count{
+    float:right;
+}
