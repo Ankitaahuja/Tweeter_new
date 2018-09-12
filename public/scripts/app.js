@@ -71,15 +71,15 @@ return d +" days ago";
       ];
       
  function renderTweets(tweets) {
-        // tweet.sort((a, b) => b.created_at - a.created_at);
-
+  tweets.sort((a, b) => b.created_at - a.created_at);
         for (let tweet of tweets) {
         var currentTime = Date.now();
         var tweetTime = tweet.created_at;
         var displayTime = currentTime - tweetTime;
-        
-            let $eachTweet = createTweetElement(tweet, convertTimeToString(displayTime));
+      
+          let $eachTweet = createTweetElement(tweet, convertTimeToString(displayTime));
             $('#tweets-container').append($eachTweet);
+            
         // loops through tweets, calls createTweetElement for each tweet
           // takes return value and appends it to the tweets container
         }
@@ -116,25 +116,31 @@ return d +" days ago";
    
   $(".new-tweet form").on("submit", function(ev) {
     ev.preventDefault();
-    $.ajax({
-      url: "/tweets",
-      method: "POST",
-      data: $(this).serialize()
-    }).then(function() {
-      loadTweets()
-    })
+    if($(".tweet-content").val().length > 140){
+      $(".error-message").slideDown().text("Exceed the maximum word limit!");
+    }else if($(".tweet-content").val().length == 0){
+      $(".error-message").slideDown().text("Tweet cannot be empty!");
+    }else{
+      $.ajax({
+        url: "/tweets",  //post all the new tweets in the path
+        method: "POST",
+        data: $(this).serialize()
+      }).then(function() {
+        loadTweets()
+      })
     // console.log("new-tweet", $(this).serialize());
+     }   
   })
 
 
   loadTweets();
 
   function loadTweets(){
-    $('.tweet').remove();
+    $('.tweet').remove(); //remove the old tweets from the data to avoid the repetition. 
     $.ajax({
-      url: "/tweets",
+      url: "/tweets",   //will show all the tweets to this path
       method: "GET"
-    }).then(function(tweets) {
+    }).then(function(tweets) { //save all the tweets and send this tweets when the renderTweets is called
       renderTweets(tweets)
     })
   }
