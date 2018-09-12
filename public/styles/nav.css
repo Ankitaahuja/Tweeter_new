@@ -23,6 +23,23 @@
     line-height: 80px
 }
 
+.button-container {
+    float: right;
+} 
+   .compose-button{
+    height: 60px;
+    width: 120px;
+    border: 1px solid black;  
+    border-radius: 8px;
+    background-color: #d7f2fb;
+    color: GREEN;
+    font-size: 1.2em;
+    margin: 8px;
+}
+
+.fas .fa-edit {
+    float:left
+}
 .container {
     width: 450px;
     text-align: center;
@@ -33,6 +50,5 @@
     padding-right: 2em;
     padding-top: 1.5em;
     height: auto
-   
 
 }

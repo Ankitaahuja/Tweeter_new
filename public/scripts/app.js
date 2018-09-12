@@ -21,7 +21,6 @@ if( h === 24 ){
 return d +" days ago";
 };
 
- $(document).ready(function() {
 
     const data = [
         {
@@ -101,7 +100,7 @@ return d +" days ago";
       .append($("<h2>").addClass("user-name").text(username))
       .append($("<h4>").text(handle))
     )
-    .append($("<div>").addClass("tweet-text").text(tweetContent))
+    .append($("<div>").addClass("tweet-text").text(tweetContent)) // .text also helps to escapes unsafe characters to literally convert it into string, so it is safe to use with untrusted text.
     .append($("<footer>").addClass("tweet-footer").text(displayTime))
     .append($("<div>").addClass("icons")
       .append($('<i class="fas fa-flag">'))
@@ -113,7 +112,8 @@ return d +" days ago";
   }
 
   // renderTweets(data);
-   
+  $(document).ready(function() {
+
   $(".new-tweet form").on("submit", function(ev) {
     ev.preventDefault();
     if($(".tweet-content").val().length > 140){
@@ -127,6 +127,7 @@ return d +" days ago";
         data: $(this).serialize()
       }).then(function() {
         loadTweets()
+        $( ".textarea" ).empty(); 
       })
     // console.log("new-tweet", $(this).serialize());
      }   
@@ -144,6 +145,18 @@ return d +" days ago";
       renderTweets(tweets)
     })
   }
+
+
+
+  $( ".compose-button" ).click(function() {
+    $( ".new-tweet" ).slideToggle("slow", function() {
+      $( ".new-tweet textarea" ).focus();
+    });
+  });
+
+  $( ".tweet-button" ).click(function() {
+    $( ".error-message" ).hide();
+    });
 
 });
 
