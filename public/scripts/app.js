@@ -71,9 +71,13 @@ return d +" days ago";
       ];
       
  function renderTweets(tweets) {
-  tweets.sort((a, b) => b.created_at - a.created_at);
+        // tweet.sort((a, b) => b.created_at - a.created_at);
 
         for (let tweet of tweets) {
+        var currentTime = Date.now();
+        var tweetTime = tweet.created_at;
+        var displayTime = currentTime - tweetTime;
+        
             let $eachTweet = createTweetElement(tweet, convertTimeToString(displayTime));
             $('#tweets-container').append($eachTweet);
         // loops through tweets, calls createTweetElement for each tweet
@@ -82,12 +86,12 @@ return d +" days ago";
 }
 
 
-  function createTweetElement(tweet){ //create each tweet and its structure(HTML)
+  function createTweetElement(tweet, displayTime){ //create each tweet and its structure(HTML)
     let username = tweet.user.name;
     let handle = tweet.user.handle;
     let profileImg = tweet.user.avatars.small;
     let tweetContent = tweet.content.text;
-    let timeStamp = tweet.created_at;
+    // let timeStamp = tweet.created_at;
 
     
 
@@ -98,7 +102,7 @@ return d +" days ago";
       .append($("<h4>").text(handle))
     )
     .append($("<div>").addClass("tweet-text").text(tweetContent))
-    .append($("<footer>").addClass("tweet-footer").text(timeStamp))
+    .append($("<footer>").addClass("tweet-footer").text(displayTime))
     .append($("<div>").addClass("icons")
       .append($('<i class="fas fa-flag">'))
       .append($('<i class="fas fa-retweet">'))
@@ -129,8 +133,7 @@ return d +" days ago";
     $('.tweet').remove();
     $.ajax({
       url: "/tweets",
-      method: "GET",
-      // data: tweets
+      method: "GET"
     }).then(function(tweets) {
       renderTweets(tweets)
     })
