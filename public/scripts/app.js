@@ -3,7 +3,25 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-$(document).ready(function() {
+function convertTimeToString(time){
+  var cd = 24 * 60 * 60 * 1000,
+      ch = 60 * 60 * 1000,
+      d = Math.floor(time / cd),
+      h = Math.floor( (time - d * cd) / ch),
+      m = Math.round( (time - d * cd - h * ch) / 60000),
+      pad = function(n){ return n < 10 ? '0' + n : n; };
+if( m === 60 ){
+  h++;
+  m = 0;
+} 
+if( h === 24 ){
+  d++;
+  h = 0;
+}
+return d +" days ago";
+};
+
+ $(document).ready(function() {
 
     const data = [
         {
@@ -52,18 +70,19 @@ $(document).ready(function() {
         }
       ];
       
-      function renderTweets(tweets) {
+ function renderTweets(tweets) {
+  tweets.sort((a, b) => b.created_at - a.created_at);
+
         for (let tweet of tweets) {
-            let $eachTweet = createTweetElement(tweet);
+            let $eachTweet = createTweetElement(tweet, convertTimeToString(displayTime));
             $('#tweets-container').append($eachTweet);
-        // loops through tweets
-          // calls createTweetElement for each tweet
+        // loops through tweets, calls createTweetElement for each tweet
           // takes return value and appends it to the tweets container
         }
-    }
+}
 
 
-  function createTweetElement(tweet){
+  function createTweetElement(tweet){ //create each tweet and its structure(HTML)
     let username = tweet.user.name;
     let handle = tweet.user.handle;
     let profileImg = tweet.user.avatars.small;
@@ -74,48 +93,77 @@ $(document).ready(function() {
 
     var $tweet = $("<article>").addClass("tweet")
     .append($("<header>").addClass("tweet-header")
-        .append($("<h2>").addClass("user-name").text(username))
-        .append($("<h4>").text(handle))
-        .append($("<img>").addClass("profile-img").attr("src", profileImg))
+      .append($("<img>").addClass("profile-img").attr("src", profileImg))
+      .append($("<h2>").addClass("user-name").text(username))
+      .append($("<h4>").text(handle))
     )
     .append($("<div>").addClass("tweet-text").text(tweetContent))
-
     .append($("<footer>").addClass("tweet-footer").text(timeStamp))
     .append($("<div>").addClass("icons")
-        .append($('<i class="fas fa-flag">'))
-        .append($('<i class="fas fa-retweet">'))
+      .append($('<i class="fas fa-flag">'))
+      .append($('<i class="fas fa-retweet">'))
         .append($('<i class="fas fa-heart">'))
     )
-    
-
-    // .append($('<i class="fas fa-flag">'))
-        // .append($("<h2>").addClass("user-name").text(name)))
-    // .append($("<div>").addClass("tweet-text").text(tweet.user.name))
-
-
-//     let $tweet = '<article class="tweet">
-//     <header class = "tweet-header" >
-//       <h2 class= > Intersting Name </h3>
-//       <h4> @funny  </h4>
-//     </header>  
-//     <div class="tweet-text"> I am a new tweet, Tweet,Tweet!!
-//     </div>
-//       <footer class= "tweet-footer">
-//         <span class= "timeStamp" > 
-//           10 days ago 
-//         </span>
-//           <div class= "icons">
-//               <i class="fas fa-flag"></i>
-//               <i class="fas fa-retweet"></i>
-//               <i class="fas fa-heart"></i>
-//       </div>
-//     </footer>
-// </article> '
-
-    // ...
     
     return $tweet;
   }
 
-  renderTweets(data);
+  // renderTweets(data);
+   
+  $(".new-tweet form").on("submit", function(ev) {
+    ev.preventDefault();
+    $.ajax({
+      url: "/tweets",
+      method: "POST",
+      data: $(this).serialize()
+    }).then(function() {
+      loadTweets()
+    })
+    // console.log("new-tweet", $(this).serialize());
+  })
+
+
+  loadTweets();
+
+  function loadTweets(){
+    $('.tweet').remove();
+    $.ajax({
+      url: "/tweets",
+      method: "GET",
+      // data: tweets
+    }).then(function(tweets) {
+      renderTweets(tweets)
+    })
+  }
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+// '<article class="tweet">
+// //     <header class = "tweet-header" >
+// //       <h2 class= > Intersting Name </h3>
+// //       <h4> @funny  </h4>
+// //     </header>  
+// //     <div class="tweet-text"> I am a new tweet, Tweet,Tweet!!
+// //     </div>
+// //       <footer class= "tweet-footer">
+// //         <span class= "timeStamp" > 
+// //           10 days ago 
+// //         </span>
+// //           <div class= "icons">
+// //               <i class="fas fa-flag"></i>
+// //               <i class="fas fa-retweet"></i>
+// //               <i class="fas fa-heart"></i>
+// //       </div>
+// //     </footer>
+// // </article> '
