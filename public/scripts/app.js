@@ -100,14 +100,15 @@ return d +" days ago";
       .append($("<h2>").addClass("user-name").text(username))
       .append($("<h4>").text(handle))
     )
-    .append($("<div>").addClass("tweet-text").text(tweetContent)) // .text also helps to escapes unsafe characters to literally convert it into string, so it is safe to use with untrusted text.
-    .append($("<footer>").addClass("tweet-footer").text(displayTime))
+    .append($("<div>").addClass("tweet-text")
+      .append($("<p>").text(tweetContent)) 
+    )// .text also helps to escapes unsafe characters by literally converting it into string, so it is safe to use with untrusted text. 
     .append($("<div>").addClass("icons")
       .append($('<i class="fas fa-flag">'))
       .append($('<i class="fas fa-retweet">'))
         .append($('<i class="fas fa-heart">'))
     )
-    
+    .append($("<footer>").addClass("tweet-footer").text(displayTime))
     return $tweet;
   }
 
@@ -117,9 +118,9 @@ return d +" days ago";
   $(".new-tweet form").on("submit", function(ev) {
     ev.preventDefault();
     if($(".tweet-content").val().length > 140){
-      $(".error-message").slideDown().text("Exceed the maximum word limit!");
+      $(".error-message").text("Exceed the maximum word limit!").slideDown();
     }else if($(".tweet-content").val().length == 0){
-      $(".error-message").slideDown().text("Tweet cannot be empty!");
+      $(".error-message").text("Tweet cannot be empty!").slideDown();
     }else{
       $.ajax({
         url: "/tweets",  //post all the new tweets in the path
@@ -127,7 +128,7 @@ return d +" days ago";
         data: $(this).serialize()
       }).then(function() {
         loadTweets()
-        $( ".textarea" ).empty(); 
+        $(".tweet-content").val("");
       })
     // console.log("new-tweet", $(this).serialize());
      }   

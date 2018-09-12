@@ -12,13 +12,13 @@
   border-bottom: 1px solid black;
   margin-top: 0;
   text-align: left;
-  width: 350px 
+  width: 365px 
 
 } 
 
     
 .tweet-content  {
-    width: 350px;
+    width: 365px;
     padding-top: 5px;
     padding-left: 5px;
 }
@@ -29,6 +29,7 @@
 
 .counter{
     float:right;
+    font-style: italic;
 }   
 
 .redColor{
