@@ -18,53 +18,6 @@ function convertTimeToString(time) {
   return d + " days ago";
 };
 
-const data = [{
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd"
-    },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
-
 function renderTweets(tweets) {
   tweets.sort((a, b) => b.created_at - a.created_at);
   for (let tweet of tweets) {
@@ -80,17 +33,14 @@ function renderTweets(tweets) {
   }
 }
 
-
 function createTweetElement(tweet, displayTime) { //create each tweet and its structure(HTML)
   let username = tweet.user.name;
   let handle = tweet.user.handle;
   let profileImg = tweet.user.avatars.small;
   let tweetContent = tweet.content.text;
-  // let timeStamp = tweet.created_at;
+  let Id = tweet._id;
 
-
-
-  var $tweet = $("<article>").addClass("tweet")
+  var $tweet = $("<article>").addClass("tweet").attr('id', Id)
     .append($("<header>").addClass("tweet-header")
       .append($("<img>").addClass("profile-img").attr("src", profileImg))
       .append($("<h2>").addClass("user-name").text(username))
@@ -108,7 +58,6 @@ function createTweetElement(tweet, displayTime) { //create each tweet and its st
   return $tweet;
 }
 
-// renderTweets(data);
 $(document).ready(function () {
 
   $(".new-tweet form").on("submit", function (ev) {
@@ -126,7 +75,6 @@ $(document).ready(function () {
         loadTweets()
         $(".tweet-content").val("");
       })
-      // console.log("new-tweet", $(this).serialize());
     }
   })
 
@@ -143,8 +91,6 @@ $(document).ready(function () {
     })
   }
 
-
-
   $(".compose-button").click(function () {
     $(".new-tweet").slideToggle("slow", function () {
       $(".new-tweet textarea").focus();
@@ -156,33 +102,3 @@ $(document).ready(function () {
   });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-// '<article class="tweet">
-// //     <header class = "tweet-header" >
-// //       <h2 class= > Intersting Name </h3>
-// //       <h4> @funny  </h4>
-// //     </header>  
-// //     <div class="tweet-text"> I am a new tweet, Tweet,Tweet!!
-// //     </div>
-// //       <footer class= "tweet-footer">
-// //         <span class= "timeStamp" > 
-// //           10 days ago 
-// //         </span>
-// //           <div class= "icons">
-// //               <i class="fas fa-flag"></i>
-// //               <i class="fas fa-retweet"></i>
-// //               <i class="fas fa-heart"></i>
-// //       </div>
-// //     </footer>
-// // </article> '
