@@ -17,3 +17,8 @@ This repository is the starter code for the project: Students will fork and clon
 - Node 5.10.x or above
 - MongoDB 4.0 or above
 
+## Screenshots
+
+![ScreenShot](https://raw.githubusercontent.com/Ankitaahuja/Tweeter_new/master/images)
+
+![ScreenShot](https://raw.githubusercontent.com/Ankitaahuja/Tweeter_new/master/images)
