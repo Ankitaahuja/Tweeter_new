@@ -96,9 +96,7 @@ $(document).ready(function () {
       $(".new-tweet textarea").focus();
     });
   });
-
   $(".tweet-button").click(function () {
     $(".error-message").hide();
   });
-
 });
