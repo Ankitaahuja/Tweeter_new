@@ -19,6 +19,6 @@ This repository is the starter code for the project: Students will fork and clon
 
 ## Screenshots
 
-![ScreenShot](https://raw.githubusercontent.com/Ankitaahuja/Tweeter_new/master/images)
+![ScreenShot](https://raw.githubusercontent.com/Ankitaahuja/Tweeter_new/public/images/Tweeter_image1.png)
 
-![ScreenShot](https://raw.githubusercontent.com/Ankitaahuja/Tweeter_new/master/images)
+![ScreenShot](https://raw.githubusercontent.com/Ankitaahuja/Tweeter_new/public/images/Tweeter_image2.png)
